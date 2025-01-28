@@ -31,8 +31,7 @@
                 "db": {
                     "kind": "hana"
                 },
-                "auth": "xsuaa",
-                "restrict_all_services": false
+                "auth": "xsuaa"
             }
         },
         "sql": {

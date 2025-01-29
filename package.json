@@ -21,17 +21,38 @@
     },
     "cds": {
         "requires": {
-            "db": {
-                "kind": "sqlite",
-                "credentials": {
-                    "url": "db.sqlite"
-                }
-            },
             "[production]": {
                 "db": {
                     "kind": "hana"
                 },
                 "auth": "xsuaa"
+            },
+            "[development]": {
+                "db": {
+                    "kind": "sqlite",
+                    "credentials": {
+                        "url": "db.sqlite"
+                    }
+                },
+                "auth": {
+                    "kind": "basic",
+                    "users": {
+                        "nastia": {
+                            "roles": [
+                                "Admin"
+                            ]
+                        }
+                    }
+                }
+            },
+            "[hybrid]": {
+                "auth": "xsuaa",
+                "db": {
+                    "kind": "sqlite",
+                    "credentials": {
+                        "url": "db.sqlite"
+                    }
+                }
             }
         },
         "sql": {

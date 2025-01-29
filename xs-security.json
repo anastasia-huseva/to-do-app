@@ -11,13 +11,13 @@
     "role-templates": [
         {
             "name": "Admin",
-            "description": "generated",
+            "description": "Read, Edit, Delete all tasks",
             "scope-references": ["$XSAPPNAME.Admin"],
             "attribute-references": []
         }
     ],
     "oauth2-configuration": {
         "credential-types": ["binding-secret", "x509"],
-        "redirect-uris": ["https://*.us10-001.hana.ondemand.com/**"]
+        "redirect-uris": ["http://localhost:5000/"]
     }
 }

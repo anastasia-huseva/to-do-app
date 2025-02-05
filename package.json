@@ -6,10 +6,10 @@
     "license": "UNLICENSED",
     "private": true,
     "dependencies": {
-        "@sap/cds": "^8",
-        "express": "^4",
         "@cap-js/hana": "^1",
-        "@sap/xssec": "^4"
+        "@sap/cds": "^8",
+        "@sap/xssec": "^4.2.8",
+        "express": "^4"
     },
     "devDependencies": {
         "@cap-js/cds-types": "^0.8.0",
@@ -37,10 +37,18 @@
                 "auth": {
                     "kind": "basic",
                     "users": {
+                        "yurii": {
+                            "attr": {
+                                "id": 1
+                            }
+                        },
                         "nastia": {
                             "roles": [
                                 "Admin"
-                            ]
+                            ],
+                            "attr": {
+                                "id": 2
+                            }
                         }
                     }
                 }
@@ -53,6 +61,11 @@
                         "url": "db.sqlite"
                     }
                 }
+            }
+        },
+        "messaging": {
+            "[development]": {
+                "kind": "file-based-messaging"
             }
         },
         "sql": {

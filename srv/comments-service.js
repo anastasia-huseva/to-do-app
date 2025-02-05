@@ -28,12 +28,13 @@ class CommentsService extends cds.ApplicationService {
 
         this.after(['CREATE', 'DELETE'], Comments, async (_, req) => {
             const { subject_ID: taskID } = req.data;
+            const requestName = req.event;
 
-            await this.emit('commented', { taskID });
+            await this.emit('commented', { taskID, requestName });
         });
 
         this.on('commented', async (req) => {
-            const { taskID } = req.data;
+            const { taskID, requestName } = req.data;
             const comments =
                 await SELECT`COUNT(*) FROM Comments WHERE subject_ID=${taskID}`;
 
@@ -42,6 +43,21 @@ class CommentsService extends cds.ApplicationService {
             await UPDATE(Tasks, taskID).set({
                 countOfComments: comments[0].COUNT,
             });
+
+            const owner = await SELECT('owner')
+                .from(Tasks)
+                .where({ ID: taskID });
+            const { owner: taskOwner } = owner[0];
+            const commenter = cds.context.user.id;
+
+            // notification
+            if (requestName === 'CREATE') {
+                const alert = await cds.connect.to('notifications');
+                await alert.notify({
+                    recipients: [taskOwner],
+                    title: `Task ${taskID} commented by user ${commenter}`,
+                });
+            }
         });
 
         return super.init();
